@@ -1,3 +1,4 @@
+import 'package:deeplinking_with_thawani/router.dart';
 import 'package:deeplinking_with_thawani/thawani/thawani_cart_item.dart';
 import 'package:deeplinking_with_thawani/thawani/thawani_payment_api.dart';
 import 'package:deeplinking_with_thawani/thawani/thawani_payment_session.dart';
@@ -11,15 +12,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Deep Linking Example',
-      onGenerateRoute: (settings) {
-        // Handle the deep link and navigate to the appropriate screen
-        if (settings.name == '/details') {
-          return MaterialPageRoute(builder: (context) => DetailsPage());
-        }
-        return MaterialPageRoute(builder: (context) => HomePage());
-      },
+      routerConfig: router,
     );
   }
 }
@@ -94,7 +89,7 @@ Future<void> _launchURL(BuildContext context, String routeName) async {
     print("Erorr payment");
   }
 
-  print("this is route name => $routeName");
+  // print("this is route name => $routeName");
   // if (await canLaunch(url.toString())) {
   //   await launch(url.toString());
   // } else {

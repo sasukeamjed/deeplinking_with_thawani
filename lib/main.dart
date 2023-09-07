@@ -58,7 +58,11 @@ class DetailsPage extends StatelessWidget {
 
 Future<void> _launchURL(BuildContext context, String routeName) async {
   // final url = Uri.parse('myghzlahapp://$routeName'); // Use your app's custom URL scheme
-  final url = Uri.parse('https://myghzlahapp.com$routeName');
+
+  // final url = Uri.parse('https://myghzlahapp.com$routeName');
+
+  //Costum scheme app link
+  final url = Uri.parse('costum://$routeName');
 
   final paymentSession = ThawaniPaymentSession(<ThawaniCartItem>[], "123", "First Name");
 

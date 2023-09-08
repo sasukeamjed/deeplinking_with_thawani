@@ -62,7 +62,7 @@ Future<void> _launchURL(BuildContext context, String routeName) async {
   // final url = Uri.parse('https://myghzlahapp.com$routeName');
 
   //Costum scheme app link
-  final url = Uri.parse('costum://$routeName');
+  final url = Uri.parse('http://ghazlah.com$routeName');
 
   final paymentSession = ThawaniPaymentSession(<ThawaniCartItem>[], "123", "First Name");
 
@@ -70,33 +70,33 @@ Future<void> _launchURL(BuildContext context, String routeName) async {
 
   PaymentsAPI api = PaymentsAPI();
 
-  // try{
-  //   Map sessionData = await api.generateSessionRequest(theGeneratedSession);
-  //   if(sessionData["success"]){
-  //     print('generating session was success');
-  //     // String thawaniPublishableKey = "jXejEJYYbW6mw1YOl6BDLzgQiVqPjz";
-  //     String thawaniPublishableKey = "HGvTMLDssJghr9tlN9gr4DVYt0qyBy";
-  //     String session_id = sessionData["data"]["session_id"];
-  //
-  //     final Uri uri = Uri(scheme: 'https', host: 'uatcheckout.thawani.om', path: 'pay/$session_id', queryParameters: {'key': thawaniPublishableKey});
-  //     // final Uri uri = Uri(scheme: 'https', host: 'checkout.thawani.om', path: 'pay/$session_id', queryParameters: {'key': thawaniPublishableKey});
-  //
-  //     print("structured url => $uri");
-  //     var response = await launchUrl(uri, mode: LaunchMode.inAppWebView);
-  //     print("This is response from launch url => $response");
-  //     // if(await canLaunchUrl(uri)){
-  //     //   print("url was launched with condition");
-  //     //   await launchUrl(uri);
-  //     // }
-  //   }
-  // }catch(e){
-  //   print("Erorr payment");
-  // }
+  try{
+    Map sessionData = await api.generateSessionRequest(theGeneratedSession);
+    if(sessionData["success"]){
+      print('generating session was success');
+      // String thawaniPublishableKey = "jXejEJYYbW6mw1YOl6BDLzgQiVqPjz";
+      String thawaniPublishableKey = "HGvTMLDssJghr9tlN9gr4DVYt0qyBy";
+      String session_id = sessionData["data"]["session_id"];
 
-  print("this is route name => $routeName");
-  if (await canLaunch(url.toString())) {
-    await launch(url.toString());
-  } else {
-    throw 'Could not launch $url';
+      final Uri uri = Uri(scheme: 'https', host: 'uatcheckout.thawani.om', path: 'pay/$session_id', queryParameters: {'key': thawaniPublishableKey});
+      // final Uri uri = Uri(scheme: 'https', host: 'checkout.thawani.om', path: 'pay/$session_id', queryParameters: {'key': thawaniPublishableKey});
+
+      print("structured url => $uri");
+      var response = await launchUrl(uri, mode: LaunchMode.inAppWebView);
+      print("This is response from launch url => $response");
+      // if(await canLaunchUrl(uri)){
+      //   print("url was launched with condition");
+      //   await launchUrl(uri);
+      // }
+    }
+  }catch(e){
+    print("Erorr payment");
   }
+
+  // print("this is route name => $routeName");
+  // if (await canLaunch(url.toString())) {
+  //   await launch(url.toString());
+  // } else {
+  //   throw 'Could not launch $url';
+  // }
 }

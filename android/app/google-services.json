@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "389828103864",
+    "project_id": "deep-links-9c99c",
+    "storage_bucket": "deep-links-9c99c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:389828103864:android:9a6539514f7cc6fc632e4d",
+        "android_client_info": {
+          "package_name": "com.example.deeplinking_with_thawani"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8SZn5GeZNtxOajchkiMrMT7wFc5HONIQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

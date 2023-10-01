@@ -165,7 +165,9 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
   /// Handle incoming links - the ones that the app will recieve from the OS
   /// while already started.
   void _handleIncomingLinks() {
+
     if (!kIsWeb) {
+
       // It will handle app links while the app is already started - be it in
       // the foreground or in the background.
       _sub = uriLinkStream.listen((Uri? uri) {

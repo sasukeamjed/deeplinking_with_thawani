@@ -25,7 +25,7 @@ class ThawaniPaymentSession{
         'unit_amount' : (1.2 * 1000).toInt(),
 
       },],
-      'success_url': 'https://company.com/cancel',
+      'success_url': 'https://ghazlah.com',
       'cancel_url': 'https://company.com/cancel',
       // "customer_id": this._customerId,
       'metadata': {

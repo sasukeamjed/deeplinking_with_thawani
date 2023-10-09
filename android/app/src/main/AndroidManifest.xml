@@ -37,7 +37,9 @@
 <!--                <category android:name="android.intent.category.DEFAULT" />-->
 <!--                <category android:name="android.intent.category.BROWSABLE" />-->
 <!--&lt;!&ndash;                <data android:scheme="myghzlahapp" /> &lt;!&ndash; Replace "myapp" with your custom scheme &ndash;&gt;&ndash;&gt;-->
-<!--                <data android:scheme="https" /> &lt;!&ndash; Replace "myapp" with your custom scheme &ndash;&gt;-->
+<!--                <data-->
+<!--                    android:scheme="unilinks"-->
+<!--                    android:host="host" /> &lt;!&ndash; Replace "myapp" with your custom scheme &ndash;&gt;-->
 
 <!--            </intent-filter>-->
             <!-- App Links -->
@@ -52,15 +54,31 @@
 <!--            </intent-filter>-->
 
             <!-- App Links -->
+<!--            <meta-data android:name="flutter_deeplinking_enabled" android:value="true" />-->
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <!-- Accepts URIs that begin with https://YOUR_HOST -->
-                <data
-                    android:scheme="https"
-                    android:host="ghazlah.com" />
+
+                <!-- If a user clicks on a shared link that uses the "http" scheme, your
+                     app should be able to delegate that traffic to "https". -->
+                <data android:scheme="http" />
+                <data android:scheme="https" />
+
+                <!-- Include one or more domains that should be verified. -->
+                <data android:host="www.ghazlah.com" />
             </intent-filter>
+
+<!--            <meta-data android:name="flutter_deeplinking_enabled" android:value="true" />-->
+<!--            <intent-filter android:autoVerify="true">-->
+<!--                <action android:name="android.intent.action.VIEW" />-->
+<!--                <category android:name="android.intent.category.DEFAULT" />-->
+<!--                <category android:name="android.intent.category.BROWSABLE" />-->
+<!--                &lt;!&ndash; Accepts URIs that begin with https://YOUR_HOST &ndash;&gt;-->
+<!--                <data-->
+<!--                    android:scheme="https"-->
+<!--                    android:host="ghazlah.com" />-->
+<!--            </intent-filter>-->
         </activity>
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->

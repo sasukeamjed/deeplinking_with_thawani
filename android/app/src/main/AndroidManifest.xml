@@ -54,7 +54,7 @@
 <!--            </intent-filter>-->
 
             <!-- App Links -->
-<!--            <meta-data android:name="flutter_deeplinking_enabled" android:value="true" />-->
+            <meta-data android:name="flutter_deeplinking_enabled" android:value="true" />
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -66,7 +66,7 @@
                 <data android:scheme="https" />
 
                 <!-- Include one or more domains that should be verified. -->
-                <data android:host="www.ghazlah.com" />
+                <data android:host="ghazlah.com" />
             </intent-filter>
 
 <!--            <meta-data android:name="flutter_deeplinking_enabled" android:value="true" />-->

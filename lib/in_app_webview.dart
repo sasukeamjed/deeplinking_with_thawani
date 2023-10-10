@@ -171,55 +171,25 @@ class _WebViewState extends State<WebView> {
 
   late InAppWebViewController inAppWebViewController;
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: WillPopScope(
-        onWillPop: () async{
-
-          var isLastPage = await inAppWebViewController.canGoBack();
-
-          if(isLastPage){
-            inAppWebViewController.goBack();
-            return false;
-          }
-
-          return true;
-        },
-        child: SafeArea(
-          child: Stack(
-            children: [
-              InAppWebView(
-                initialUrlRequest: URLRequest(
-                  url: Uri.parse("https://www.ghazlah.com/"),
-                ),
-                onWebViewCreated: (InAppWebViewController controller){
-                  inAppWebViewController = controller;
-                },
-                onProgressChanged: (InAppWebViewController controller, int progress){
-                  setState(() {
-                    _progress = progress / 100;
-                  });
-                },
-                onLoadStart: (InAppWebViewController controller, uri){
-                  print("This is the url => ${uri?.path}");
-
-                  if(uri!.path.toLowerCase().contains("abaya")){
-                    controller.stopLoading();
-
-                  }
-                },
-              ),
-              _progress < 1 ? Container(
-                child: LinearProgressIndicator(
-                  value: _progress,
-                ),
-              ) : SizedBox(),
-            ],
+      body: Stack(
+        children: [
+          InAppWebView(
+            initialUrlRequest: URLRequest(
+              url: Uri.parse("https://www.ghazlah.com/"),
+            ),
+            onWebViewCreated: (InAppWebViewController controller){
+              inAppWebViewController = controller;
+            },
+            onProgressChanged: (InAppWebViewController controller, int progress){
+              setState(() {
+                _progress = progress / 100;
+              });
+            },
           ),
-        ),
+        ],
       ),
     );
   }

@@ -140,6 +140,7 @@ void main() => runApp(const MaterialApp(home: HomePage(),));
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -147,12 +148,13 @@ class HomePage extends StatelessWidget {
         title: const Text('Home Page'),
       ),
       body: Center(
-        child: ElevatedButton(
+        child:ElevatedButton(
           onPressed: () {
             Navigator.push(context, MaterialPageRoute(builder: (context)=> WebView()));
             // _launchURL(context, '/details');
+            // _generatePaymentURL();
           },
-          child: const Text('Open Details Page'),
+          child: const Text('Open Payment Page'),
         ),
       ),
     );
@@ -170,6 +172,39 @@ class _WebViewState extends State<WebView> {
   double _progress = 0;
 
   late InAppWebViewController inAppWebViewController;
+  late Uri _paymentUrl;
+
+  Future<Uri> _generatePaymentURL() async {
+
+
+    final paymentSession = ThawaniPaymentSession(<ThawaniCartItem>[], "123", "First Name");
+
+    final theGeneratedSession = paymentSession.generateSessionData();
+
+    PaymentsAPI api = PaymentsAPI();
+
+    try{
+      Map sessionData = await api.generateSessionRequest(theGeneratedSession);
+      if(sessionData["success"]){
+        print('generating session was success');
+        // String thawaniPublishableKey = "jXejEJYYbW6mw1YOl6BDLzgQiVqPjz";
+        String thawaniPublishableKey = "HGvTMLDssJghr9tlN9gr4DVYt0qyBy";
+        String session_id = sessionData["data"]["session_id"];
+
+        final Uri uri = Uri(scheme: 'https', host: 'uatcheckout.thawani.om', path: 'pay/$session_id', queryParameters: {'key': thawaniPublishableKey});
+        // final Uri uri = Uri(scheme: 'https', host: 'checkout.thawani.om', path: 'pay/$session_id', queryParameters: {'key': thawaniPublishableKey});
+        _paymentUrl = uri;
+        return uri;
+      }
+    }catch(e){
+      print("Erorr payment");
+    }
+
+    return Uri();
+
+  }
+
+
 
 
 
@@ -189,35 +224,45 @@ class _WebViewState extends State<WebView> {
           return true;
         },
         child: SafeArea(
-          child: Stack(
-            children: [
-              InAppWebView(
-                initialUrlRequest: URLRequest(
-                  url: Uri.parse("https://www.ghazlah.com/"),
-                ),
-                onWebViewCreated: (InAppWebViewController controller){
-                  inAppWebViewController = controller;
-                },
-                onProgressChanged: (InAppWebViewController controller, int progress){
-                  setState(() {
-                    _progress = progress / 100;
-                  });
-                },
-                onLoadStart: (InAppWebViewController controller, uri){
-                  print("This is the url => ${uri?.path}");
+          child: FutureBuilder(
+            future: _generatePaymentURL(),
+            builder: (BuildContext context, AsyncSnapshot<Uri> urlSnapshot){
+              if(urlSnapshot.hasData){
+                return Stack(
+                  children: [
+                    InAppWebView(
+                      initialUrlRequest: URLRequest(
+                        url: Uri.parse(_paymentUrl.toString()),
+                      ),
+                      onWebViewCreated: (InAppWebViewController controller){
+                        inAppWebViewController = controller;
+                      },
+                      onProgressChanged: (InAppWebViewController controller, int progress){
+                        setState(() {
+                          _progress = progress / 100;
+                        });
+                      },
+                      onLoadStart: (InAppWebViewController controller, uri){
+                        print("This is the url => ${uri?.path}");
 
-                  if(uri!.path.toLowerCase().contains("abaya")){
-                    controller.stopLoading();
+                        if(uri!.path.toLowerCase().contains("success")){
+                          print("url contains abaya word; will stop loading");
+                          controller.stopLoading();
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>DetailsPage2()));
+                        }
+                      },
+                    ),
+                    _progress < 1 ? Container(
+                      child: LinearProgressIndicator(
+                        value: _progress,
+                      ),
+                    ) : SizedBox(),
+                  ],
+                );
+              }
 
-                  }
-                },
-              ),
-              _progress < 1 ? Container(
-                child: LinearProgressIndicator(
-                  value: _progress,
-                ),
-              ) : SizedBox(),
-            ],
+              return const CircularProgressIndicator();
+            },
           ),
         ),
       ),
